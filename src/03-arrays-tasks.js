@@ -43,8 +43,6 @@ function generateOdds(len) {
     out.push(i);
     i += 2;
   } while (out.length < len);
-  console.log('len = ', len);
-  console.log('out = ', out);
   return out;
 }
 
