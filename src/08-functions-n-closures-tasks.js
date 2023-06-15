@@ -45,10 +45,12 @@ function getComposition(/* f, g */) {
  *
  */
 function getPowerFunction(exponent) {
-  return function (x) {
+  // eslint-disable-next-line func-names
+  const aa = function (x) {
     // eslint-disable-next-line no-restricted-properties
     return Math.pow(x, exponent);
   };
+  return aa;
 }
 
 
