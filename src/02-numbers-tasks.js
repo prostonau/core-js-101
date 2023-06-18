@@ -164,8 +164,9 @@ function parseNumberFromString(/* value */) {
  *   3,3,3   => 5.196152422706632
  *   1,2,3   => 3.741657386773941
  */
-function getParallelepipedDiagonal(/* a, b, c */) {
-  throw new Error('Not implemented');
+function getParallelepipedDiagonal(a, b, c) {
+  const answer = Math.sqrt(a ** 2 + b ** 2 + c ** 2);
+  return answer;
 }
 
 
@@ -186,8 +187,9 @@ function getParallelepipedDiagonal(/* a, b, c */) {
  *   1678, 2  => 1700
  *   1678, 3  => 2000
  */
-function roundToPowerOfTen(/* num, pow */) {
-  throw new Error('Not implemented');
+function roundToPowerOfTen(num, pow) {
+  // eslint-disable-next-line no-restricted-properties
+  return Math.round(num / (Math.pow(10, pow))) * Math.pow(10, pow);
 }
 
 /**
@@ -207,8 +209,9 @@ function roundToPowerOfTen(/* num, pow */) {
  *   16 => false
  *   17 => true
  */
-function isPrime(/* n */) {
-  throw new Error('Not implemented');
+function isPrime(num) {
+  // eslint-disable-next-line max-len
+  return num > 1 && (num === 2 || num % 2 !== 0) && Array.from(Array(Math.floor(Math.sqrt(num)) - 1).keys()).every((i) => num % (i + 2) !== 0);
 }
 
 /**
@@ -226,8 +229,10 @@ function isPrime(/* n */) {
  *   toNumber(42, 0) => 42
  *   toNumber(new Number(42), 0) => 42
  */
-function toNumber(/* value, def */) {
-  throw new Error('Not implemented');
+function toNumber(value, def) {
+  const num = Number(value);
+  // eslint-disable-next-line no-restricted-globals
+  return typeof num === 'number' && !isNaN(num) ? num : def;
 }
 
 module.exports = {
