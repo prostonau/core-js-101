@@ -211,8 +211,42 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  const topLeftElement = '┌';
+  const topRightElement = '┐';
+  const bottomLeftElement = '└';
+  const bottomRightElement = '┘';
+  const horizontalElement = '─';
+  const verticalElement = '│';
+  let result = '';
+  for (let row = 0; row < height; row += 1) {
+    for (let col = 0; col < width; col += 1) {
+      if (row === 0) {
+        if (col === 0) {
+          result += topLeftElement;
+        } else if (col === width - 1) {
+          result += topRightElement;
+        } else {
+          result += horizontalElement;
+        }
+      } else if (row === height - 1) {
+        if (col === 0) {
+          result += bottomLeftElement;
+        } else if (col === width - 1) {
+          result += bottomRightElement;
+        } else {
+          result += horizontalElement;
+        }
+      } else if (col === 0 || col === width - 1) {
+        result += verticalElement;
+      } else {
+        result += ' ';
+      }
+    }
+    result += '\n';
+  }
+
+  return result;
 }
 
 
@@ -294,8 +328,13 @@ function isString(value) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  const cards = [
+    'A♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣', '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣', 'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦', '10♦', 'J♦', 'Q♦', 'K♦',
+    'A♥', '2♥', '3♥', '4♥', '5♥', '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥', 'A♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠', 'Q♠', 'K♠',
+  ];
+
+  return cards.findIndex((card) => card === value);
 }
 
 
