@@ -226,8 +226,12 @@ function findFirstSingleChar(str) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  const startB = isStartIncluded ? '[' : '(';
+  const endB = isEndIncluded ? ']' : ')';
+  const smallest = Math.min(a, b);
+  const largest = Math.max(a, b);
+  return `${startB}${smallest}, ${largest}${endB}`;
 }
 
 
@@ -243,8 +247,8 @@ function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  return str.split('').reverse().join('');
 }
 
 
@@ -260,8 +264,8 @@ function reverseString(/* str */) {
  *   87354 => 45378
  *   34143 => 34143
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+function reverseInteger(num) {
+  return num.toString().split('').reverse().join('');
 }
 
 
@@ -303,8 +307,14 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  const ourSum = num.toString().split('').map(Number).reduce((acc, val) => acc + val, 0);
+
+  if (ourSum > 9) {
+    return getDigitalRoot(ourSum);
+  }
+
+  return ourSum;
 }
 
 
@@ -329,8 +339,20 @@ function getDigitalRoot(/* num */) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const openingB = ['[', '(', '{', '<']; const closingBrackets = [']', ')', '}', '>']; const stack = [];
+  for (let i = 0; i < str.length; i += 1) {
+    const char = str[i];
+    if (openingB.includes(char)) {
+      stack.push(char);
+    } else if (closingBrackets.includes(char)) {
+      const openingBracket = openingB[closingBrackets.indexOf(char)];
+      if (stack.length === 0 || stack.pop() !== openingBracket) {
+        return false;
+      }
+    }
+  }
+  return stack.length === 0;
 }
 
 
@@ -354,8 +376,14 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  let res = '';
+  while (num > 0) {
+    res = (num % n) + res;
+    // eslint-disable-next-line no-param-reassign
+    num = Math.floor(num / n);
+  }
+  return res;
 }
 
 
@@ -394,8 +422,11 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const transposedMatrix2 = m2[0].map((col, i) => m2.map((row) => row[i]));
+  // eslint-disable-next-line max-len
+  const output = m1.map((row) => transposedMatrix2.map((col) => row.reduce((sum, el, i) => sum + el * col[i], 0)));
+  return output;
 }
 
 
@@ -429,8 +460,26 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  const rowWins = position.find((row) => row[0] && row[0] === row[1] && row[0] === row[2]);
+  if (rowWins) {
+    return rowWins[0];
+  }
+  // eslint-disable-next-line max-len
+  const transposedPositionCheck = position[0].map((_, colIndex) => position.map((row) => row[colIndex]));
+  // eslint-disable-next-line max-len
+  const colWins = transposedPositionCheck.find((col) => col[0] && col[0] === col[1] && col[0] === col[2]);
+  if (colWins) {
+    return colWins[0];
+  }
+  const diagonal1 = [position[0][0], position[1][1], position[2][2]];
+  const diagonal2 = [position[0][2], position[1][1], position[2][0]];
+  // eslint-disable-next-line max-len
+  const diagonalWinsCheck = [diagonal1, diagonal2].find((diagonal) => diagonal[0] && diagonal[0] === diagonal[1] && diagonal[0] === diagonal[2]);
+  if (diagonalWinsCheck) {
+    return diagonalWinsCheck[0];
+  }
+  return undefined;
 }
 
 
